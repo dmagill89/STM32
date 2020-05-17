@@ -40,8 +40,8 @@ STM32-HelloWorld.bin \
 all: STM32-HelloWorld.elf secondary-outputs
 
 # Tool invocations
-STM32-HelloWorld.elf: $(OBJS) $(USER_OBJS) C:\Users\David\ Magill\STM32CubeIDE\workspace_1.3.0\STM32-HelloWorld\STM32F446RETX_FLASH.ld
-	arm-none-eabi-gcc -o "STM32-HelloWorld.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\David Magill\STM32CubeIDE\workspace_1.3.0\STM32-HelloWorld\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32-HelloWorld.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+STM32-HelloWorld.elf: $(OBJS) $(USER_OBJS) C:\Users\David\Embdedded\ Programming\STM32\STM32-HelloWorld\STM32F446RETX_FLASH.ld
+	arm-none-eabi-gcc -o "STM32-HelloWorld.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\David\Embdedded Programming\STM32\STM32-HelloWorld\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32-HelloWorld.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
