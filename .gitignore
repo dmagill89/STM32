@@ -1,2 +1,8 @@
 .metadata
 RemoteSystemsTempFiles
+
+*.o
+*.mk
+*.elf
+*.list
+*.map
