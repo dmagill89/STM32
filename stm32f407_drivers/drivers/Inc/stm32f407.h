@@ -8,6 +8,8 @@
 #ifndef INC_STM32F407_H_
 #define INC_STM32F407_H_
 
+#include<stdint.h>
+
 /**
  * base addresses of Flash and SRAM memories
  */
@@ -42,5 +44,63 @@
 #define GPIOH_BASEADDR				(AHB1PERIPH_BASE + 0x1C00)
 #define GPIOI_BASEADDR				(AHB1PERIPH_BASE + 0x2000)
 
+/**
+ * base addresses for APB1 peripherals
+ */
+
+#define I2C1_BASEADDR				(APB1PERIPH_BASE + 0x5400)
+#define I2C2_BASEADDR				(APB1PERIPH_BASE + 0x5800)
+#define I2C3_BASEADDR				(APB1PERIPH_BASE + 0x5C00)
+
+#define SPI2_BASEADDR				(APB1PERIPH_BASE + 0x3800)
+#define SPI3_BASEADDR				(APB1PERIPH_BASE + 0x3C00)
+
+#define USART2_BASEADDR				(APB1PERIPH_BASE + 0x4400)
+#define USART3_BASEADDR				(APB1PERIPH_BASE + 0x4800)
+#define UART4_BASEADDR				(APB1PERIPH_BASE + 0x4C00)
+#define UART5_BASEADDR				(APB1PERIPH_BASE + 0x5000)
+
+/**
+ * base addresses for APB2 peripherals
+ */
+
+#define EXTI_BASEADDR				(APB2PERIPH_BASE + 0x3C00)
+
+#define USART1_BASEADDR				(APB2PERIPH_BASE + 0x1000)
+#define USART6_BASEADDR				(APB2PERIPH_BASE + 0x1400)
+
+#define SPI1_BASEADDR				(APB2PERIPH_BASE + 0x3000)
+
+#define SYSCFG_BASEADDR				(APB2PERIPH_BASE + 0x3800)
+
+/**
+ * peripheral register structures
+ */
+
+typedef struct {
+	volatile uint32_t MODER;
+	volatile uint32_t OTYPER;
+	volatile uint32_t OSPEEDR;
+	volatile uint32_t PUPDR;
+	volatile uint32_t IDR;
+	volatile uint32_t ODR;
+	volatile uint32_t BSRR;
+	volatile uint32_t LCKR;
+	volatile uint32_t AFR[2];
+}GPIO_RegDef_t;
+
+/**
+ * peripheral definitions
+ */
+
+#define GPIOA 						((GPIO_RegDef_t*) GPIOA_BASEADDR)
+#define GPIOB 						((GPIO_RegDef_t*) GPIOB_BASEADDR)
+#define GPIOC 						((GPIO_RegDef_t*) GPIOC_BASEADDR)
+#define GPIOD 						((GPIO_RegDef_t*) GPIOD_BASEADDR)
+#define GPIOE 						((GPIO_RegDef_t*) GPIOE_BASEADDR)
+#define GPIOF 						((GPIO_RegDef_t*) GPIOF_BASEADDR)
+#define GPIOG 						((GPIO_RegDef_t*) GPIOG_BASEADDR)
+#define GPIOH 						((GPIO_RegDef_t*) GPIOH_BASEADDR)
+#define GPIOI 						((GPIO_RegDef_t*) GPIOI_BASEADDR)
 
 #endif /* INC_STM32F407_H_ */
