@@ -44,6 +44,7 @@
 #define GPIOH_BASEADDR				(AHB1PERIPH_BASE + 0x1C00)
 #define GPIOI_BASEADDR				(AHB1PERIPH_BASE + 0x2000)
 
+#define RCC_BASEADDR                (AHB1PERIPH_BASE + 0x3800)
 /**
  * base addresses for APB1 peripherals
  */
@@ -135,5 +136,21 @@ typedef struct {
 #define GPIOG 						((GPIO_RegDef_t*) GPIOG_BASEADDR)
 #define GPIOH 						((GPIO_RegDef_t*) GPIOH_BASEADDR)
 #define GPIOI 						((GPIO_RegDef_t*) GPIOI_BASEADDR)
+
+#define RCC                         ((RCC_RegDef_t*) RCC_BASEADDR)
+
+/**
+ * clock enable macros
+ */
+
+#define GPIOA_PCLK_EN()   (RCC->AHB1ENR |= (1 << 0))
+#define GPIOB_PCLK_EN()   (RCC->AHB1ENR |= (1 << 1))
+#define GPIOC_PCLK_EN()   (RCC->AHB1ENR |= (1 << 2))
+#define GPIOD_PCLK_EN()   (RCC->AHB1ENR |= (1 << 3))
+#define GPIOE_PCLK_EN()   (RCC->AHB1ENR |= (1 << 4))
+#define GPIOF_PCLK_EN()   (RCC->AHB1ENR |= (1 << 5))
+#define GPIOG_PCLK_EN()   (RCC->AHB1ENR |= (1 << 6))
+#define GPIOH_PCLK_EN()   (RCC->AHB1ENR |= (1 << 7))
+#define GPIOI_PCLK_EN()   (RCC->AHB1ENR |= (1 << 8))
 
 #endif /* INC_STM32F407_H_ */
