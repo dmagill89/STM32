@@ -147,6 +147,14 @@ typedef struct {
     volatile uint32_t PR;
 } EXTI_RegDef_t;
 
+// SYSCFG register structure
+typedef struct {
+    volatile uint32_t MEMRMP;
+    volatile uint32_t PMC;
+    volatile uint32_t EXTICR[4];
+    volatile uint32_t CMPCR;
+} SYSCFG_RegDef_t;
+
 /**
  * peripheral definitions
  */
@@ -163,7 +171,7 @@ typedef struct {
 
 #define RCC                         ((RCC_RegDef_t*) RCC_BASEADDR)
 
-#define EXTI                        ((RCC_RegDef_t*) EXTI_BASEADDR)
+#define EXTI                        ((EXTI_RegDef_t*) EXTI_BASEADDR)
 
 /**
  * clock enable macros for GPIOx

@@ -99,17 +99,27 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle) {
 
         if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT) {
             // 1. configure the falling trigger
+            EXTI->FSTR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+            // clear the corresponding RTSR bit
+            EXTI->RTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 
         } else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT) {
             // 1. configure the rising trigger
+            EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+            // clear the corresponding RTSR bit
+            EXTI->FTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 
         } else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT) {
             // 1. configure the rising/falling trigger
+            EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+            // clear the corresponding RTSR bit
+            EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
         }
 
         // 2. configure the GPIO port selection in SYSCONFIG_EXTICR
 
-        // 3. configure the exti interrupt delivery using IMR
+        // 3. configure the EXTI interrupt delivery using IMR
+        EXTI->IMR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
     }
 
     temp = 0;
@@ -145,7 +155,6 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle) {
         pGPIOHandle->pGPIOx->AFR[temp1] &= ~(0xF << (4 * temp2)); // clear bits
         pGPIOHandle->pGPIOx->AFR[temp1] |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode << (4 * temp2));
     }
-
 
 }
 
@@ -238,7 +247,8 @@ uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx) {
  *
  * @Note              -  none
  */
-void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t value) {
+void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber,
+        uint8_t value) {
 
     if (value == GPIO_PIN_SET) {
         // write 1 to the output data register at the corresponding pin number
@@ -271,7 +281,7 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value) {
  * @brief             - This function toggles the input data register for a GPIO pin
  *
  * @param[in]         - base address of the gpio peripheral
-*  @param[in]         - the pin we want to toggle
+ *  @param[in]         - the pin we want to toggle
  *
  * @return            -  0 or 1
  *
