@@ -96,6 +96,20 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle) {
         pGPIOHandle->pGPIOx->MODER |= temp;
     } else {
         // interrupt mode
+
+        if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT) {
+            // 1. configure the falling trigger
+
+        } else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT) {
+            // 1. configure the rising trigger
+
+        } else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT) {
+            // 1. configure the rising/falling trigger
+        }
+
+        // 2. configure the GPIO port selection in SYSCONFIG_EXTICR
+
+        // 3. configure the exti interrupt delivery using IMR
     }
 
     temp = 0;

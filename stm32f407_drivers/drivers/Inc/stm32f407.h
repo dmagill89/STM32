@@ -90,6 +90,7 @@
  * peripheral register structures
  */
 
+// GPIO register structure
 typedef struct {
     volatile uint32_t MODER;
     volatile uint32_t OTYPER;
@@ -102,6 +103,7 @@ typedef struct {
     volatile uint32_t AFR[2];
 } GPIO_RegDef_t;
 
+// RCC register structure
 typedef struct {
     volatile uint32_t CR;
     volatile uint32_t PLLCFGR;
@@ -135,6 +137,16 @@ typedef struct {
     volatile uint32_t PLLI2SCFGR;
 } RCC_RegDef_t;
 
+// EXTI register structure
+typedef struct {
+    volatile uint32_t IMR;
+    volatile uint32_t EMR;
+    volatile uint32_t RTSR;
+    volatile uint32_t FSTR;
+    volatile uint32_t SWIER;
+    volatile uint32_t PR;
+} EXTI_RegDef_t;
+
 /**
  * peripheral definitions
  */
@@ -150,6 +162,8 @@ typedef struct {
 #define GPIOI 						((GPIO_RegDef_t*) GPIOI_BASEADDR)
 
 #define RCC                         ((RCC_RegDef_t*) RCC_BASEADDR)
+
+#define EXTI                        ((RCC_RegDef_t*) EXTI_BASEADDR)
 
 /**
  * clock enable macros for GPIOx
