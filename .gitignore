@@ -6,5 +6,6 @@ RemoteSystemsTempFiles
 *.elf
 *.list
 *.map
+*.launch
 
 **/Debug
