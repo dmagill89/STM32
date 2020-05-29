@@ -107,18 +107,24 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle) {
             // 1. configure the rising trigger
             EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
             // clear the corresponding RTSR bit
-            EXTI->FTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+            EXTI->FSTR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 
         } else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT) {
             // 1. configure the rising/falling trigger
             EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
             // clear the corresponding RTSR bit
-            EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+            EXTI->FSTR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
         }
 
         // 2. configure the GPIO port selection in SYSCONFIG_EXTICR
+        uint8_t extiNumber = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 4;
+        uint8_t extiSection = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 4;
+        uint8_t portCode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx);
 
-        // 3. configure the EXTI interrupt delivery using IMR
+        SYSCFG_PCLK_EN();
+        SYSCFG->EXTICR[extiNumber] = portCode << (extiSection * 4);
+
+        // 3. configure the EXTI interrupt delivery using interrupt mask register IMR
         EXTI->IMR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
     }
 
