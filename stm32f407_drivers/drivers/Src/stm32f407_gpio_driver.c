@@ -300,5 +300,42 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber) {
 /**
  * IRQ config and ISR handling
  */
-//void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnOrDis);
+void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnOrDis) {
+
+    if (EnOrDis == ENABLE) {
+
+        if (IRQNumber < 31) {
+
+            // program ISER0 register
+            *NVIC_ISER0 |= (1 << IRQNumber);
+
+        } else if (IRQNumber > 31 && IRQNumber < 64) {
+
+            // program ISER1 register
+            *NVIC_ISER1 |= (1 << (IRQNumber % 32));
+
+        } else if (IRQNumber > 64 && IRQNumber < 96) {
+
+            // program ISER2 register
+            *NVIC_ISER2 |= (1 << (IRQNumber % 32));
+        }
+    } else {
+
+        if (IRQNumber < 31) {
+
+            // program ISER0 register
+            *NVIC_ICER0 |= (1 << IRQNumber);
+
+        } else if (IRQNumber > 31 && IRQNumber < 64) {
+
+            // program ISER1 register
+            *NVIC_ICER1 |= (1 << (IRQNumber % 32));
+
+        } else if (IRQNumber > 64 && IRQNumber < 96) {
+
+            // program ISER2 register
+            *NVIC_ICER2 |= (1 << (IRQNumber % 32));
+        }
+    }
+}
 //void GPIO_IRQHandling(unit8_t pinNumber);
