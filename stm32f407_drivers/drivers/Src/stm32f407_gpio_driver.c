@@ -287,7 +287,7 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value) {
  * @brief             - This function toggles the input data register for a GPIO pin
  *
  * @param[in]         - base address of the gpio peripheral
- *  @param[in]         - the pin we want to toggle
+ * @param[in]         - the pin we want to toggle
  *
  * @return            -  0 or 1
  *
@@ -300,7 +300,22 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber) {
 /**
  * IRQ config and ISR handling
  */
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnOrDis) {
+
+
+
+/*********************************************************************
+ * @fn                - GPIO_IRQInterruptConfig
+ *
+ * @brief             - This function is used to enabled or clear GPIO interrupts in the NVIC
+ *
+ * @param[in]         - IRQNumber
+ * @param[in]         - Enable of Disable
+ *
+ * @return            - none
+ *
+ * @Note              - none
+ */
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDis) {
 
     if (EnOrDis == ENABLE) {
 
@@ -337,5 +352,28 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnOrDis) {
             *NVIC_ICER2 |= (1 << (IRQNumber % 32));
         }
     }
+}
+
+
+/*********************************************************************
+ * @fn                - GPIO_IRQPriorityConfig
+ *
+ * @brief             - This function is used to set the priority of an interrupt
+ *
+ * @param[in]         - IRQNumber
+ * @param[in]         - Priority
+ *
+ * @return            - none
+ *
+ * @Note              - none
+ */
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority) {
+
+    // first find the ipr register and section offset
+    uint8_t iprx = IRQNumber / 4;
+    uint8_t iprsection = IRQNumber % 4;
+    uint8_t shiftAmount = (8 * iprsection) + 4;
+
+    *(NVIC_PR_BASE_ADDR + (iprx * 4)) |= (IRQPriority << shiftAmount);
 }
 //void GPIO_IRQHandling(unit8_t pinNumber);
