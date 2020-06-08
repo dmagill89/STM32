@@ -328,7 +328,6 @@ typedef struct {
 /*
  * IRQ(Interrupt Request) Numbers of STM32F407x MCU
  * NOTE: update these macros with valid values according to your MCU
- * TODO: You may complete this list for other peripherals
  */
 
 #define IRQ_NO_EXTI0        6
